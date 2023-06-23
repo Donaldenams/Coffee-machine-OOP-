@@ -1,0 +1,68 @@
+from menu import Menu, MenuItem
+from coffee_maker import CoffeeMaker
+from money_machine import MoneyMachine
+
+ #TODO 1: Given 4 classes the first thing is to create an object out of each class
+
+menu = Menu()
+coffee_maker = CoffeeMaker()
+money_machine = MoneyMachine()
+start_coffee = True
+
+ #TODO 2: Next is to generate report for the available resources in the machine, one easy way to do this is to find the class associated with this functionality
+
+
+
+#TODO 3: Check if the Resources are sufficient
+#The coffee maker class have a is_resource sufficient method but takes a drink input
+#Before you can check if the resources are available, you must first ask the user for a drink within the MenuItem
+#This leads us to the Menu class that infact have two methods
+#The first returns the names of the available order and the second gets the order
+
+while start_coffee:
+    #We give the user a list of available options which are just concatenated strings
+    options = menu.get_items()
+    choice = input(f'What would you like {options}: ').lower()
+    if choice == 'off':
+        start_coffee = False
+    elif choice == 'report':
+        money_machine.report()
+        coffee_maker.report()
+    else:
+        #If the user makes a choice we need to check if there are available resources to make the order
+        #One way to do that is looking for the method that can perform this operation
+        #In the Menu class there is an option called find drink, that takes as input the user choice
+        drink = menu.find_drink(choice)
+        #Next is to check the coffee maker class to see if we have the available reources
+        #The is_resource sufficient method is available within the coffeemaker class and takes MenuItem object as input
+        #It returns True if the resources are available to make the drink
+        if coffee_maker.is_resource_sufficient(drink):
+            #TODO 4: is to process coins and check if the transaction is successful
+            #The money machine class has a make payment option that takes the cost of the drink as input
+            #This cost attribute is imbedded in the MenuItem class
+            #Recall that the find drink method returns as output the attributes within the Menu Item class
+            #And we have already used this method in the drink variable
+            if money_machine.make_payment(drink.cost):
+                #TODO 5: Make Coffee, if all the requirements are met
+                #Within the coffee maker object, we have the make coffee method that takes the drink as input
+                coffee_maker.make_coffee(drink)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
